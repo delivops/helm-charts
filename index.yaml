@@ -1,0 +1,45 @@
+apiVersion: v1
+entries:
+  app:
+  - apiVersion: v2
+    created: "2023-09-21T19:23:34.485657331Z"
+    description: A Helm chart for Kubernetes
+    digest: 1ea669566ed56b6b83134b05813644b8e73615ec28e4a4210a274a93a7384e6e
+    maintainers:
+    - email: hello@delivops.io
+      name: Delivops
+      url: https://delivops.io
+    name: app
+    type: application
+    urls:
+    - https://github.com/delivops/helm-charts/releases/download/app-0.1.0/app-0.1.0.tgz
+    version: 0.1.0
+  cronjob:
+  - apiVersion: v2
+    created: "2023-09-21T19:23:34.640507323Z"
+    description: A Helm chart for Kubernetes
+    digest: c47f6718ccd5953913e3d77b5d056d4268f99d05305a91d63b388f3eb58ec923
+    maintainers:
+    - email: hello@delivops.io
+      name: Delivops
+      url: https://delivops.io
+    name: cronjob
+    type: application
+    urls:
+    - https://github.com/delivops/helm-charts/releases/download/cronjob-0.1.0/cronjob-0.1.0.tgz
+    version: 0.1.0
+  job:
+  - apiVersion: v2
+    created: "2023-09-21T19:23:34.860447152Z"
+    description: A Helm chart for Kubernetes
+    digest: b058c488f3aea8c5d4e8baf6c4431f5335a958dca0bb4cf9ce6bb06afe3926ed
+    maintainers:
+    - email: hello@delivops.io
+      name: Delivops
+      url: https://delivops.io
+    name: job
+    type: application
+    urls:
+    - https://github.com/delivops/helm-charts/releases/download/job-0.1.0/job-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-09-21T19:23:34.860461752Z"
