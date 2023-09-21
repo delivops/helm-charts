@@ -1,6 +1,10 @@
 apiVersion: v2
 name: app
 description: A Helm chart for Kubernetes
+maintainers:
+  - name: Delivops
+    email: hello@delivops.io
+    url: https://delivops.io
 
 # A chart can be either an 'application' or a 'library' chart.
 #
