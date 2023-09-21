@@ -2,6 +2,19 @@ apiVersion: v1
 entries:
   app:
   - apiVersion: v2
+    created: "2023-09-21T19:43:34.790850863Z"
+    description: A Helm chart for Kubernetes
+    digest: fe481ce2e249af4374248418e5603c748bfa26a69ed7ef2ff2c17716b3db5041
+    maintainers:
+    - email: hello@delivops.io
+      name: Delivops
+      url: https://delivops.io
+    name: app
+    type: application
+    urls:
+    - https://github.com/delivops/helm-charts/releases/download/app-0.1.1/app-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     created: "2023-09-21T19:23:34.485657331Z"
     description: A Helm chart for Kubernetes
     digest: 1ea669566ed56b6b83134b05813644b8e73615ec28e4a4210a274a93a7384e6e
@@ -15,6 +28,19 @@ entries:
     - https://github.com/delivops/helm-charts/releases/download/app-0.1.0/app-0.1.0.tgz
     version: 0.1.0
   cronjob:
+  - apiVersion: v2
+    created: "2023-09-21T19:43:34.977683694Z"
+    description: A Helm chart for Kubernetes
+    digest: 02e6bd159542194b0ffb0c06a9fd2cedd5d33d68465fcb61d397723c408c43b2
+    maintainers:
+    - email: hello@delivops.io
+      name: Delivops
+      url: https://delivops.io
+    name: cronjob
+    type: application
+    urls:
+    - https://github.com/delivops/helm-charts/releases/download/cronjob-0.1.1/cronjob-0.1.1.tgz
+    version: 0.1.1
   - apiVersion: v2
     created: "2023-09-21T19:23:34.640507323Z"
     description: A Helm chart for Kubernetes
@@ -30,6 +56,19 @@ entries:
     version: 0.1.0
   job:
   - apiVersion: v2
+    created: "2023-09-21T19:43:35.132482462Z"
+    description: A Helm chart for Kubernetes
+    digest: bfaee1992f6279af14af1fae1f0cf00e7ce6d37fbe9c35a785712df626a01801
+    maintainers:
+    - email: hello@delivops.io
+      name: Delivops
+      url: https://delivops.io
+    name: job
+    type: application
+    urls:
+    - https://github.com/delivops/helm-charts/releases/download/job-0.1.1/job-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     created: "2023-09-21T19:23:34.860447152Z"
     description: A Helm chart for Kubernetes
     digest: b058c488f3aea8c5d4e8baf6c4431f5335a958dca0bb4cf9ce6bb06afe3926ed
@@ -42,4 +81,4 @@ entries:
     urls:
     - https://github.com/delivops/helm-charts/releases/download/job-0.1.0/job-0.1.0.tgz
     version: 0.1.0
-generated: "2023-09-21T19:23:34.860461752Z"
+generated: "2023-09-21T19:43:35.132502162Z"
