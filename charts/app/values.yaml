@@ -10,7 +10,7 @@ image:
   containerPort: 80
   args: []
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "stable"
 
 healthCheck:
   enabled: true

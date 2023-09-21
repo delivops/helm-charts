@@ -9,7 +9,7 @@ image:
   pullPolicy: IfNotPresent
   args: []
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "latest"
 
 schedule: "0 0 * * *"
 suspend: false
