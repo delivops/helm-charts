@@ -80,29 +80,6 @@ spec:
                 name: {{ $fullname }}-secrets-env
           {{- end }}
           {{- end }} 
-
-
-
-
-          # envFrom:
-          #   {{- if and .Values.secrets.enabled .Values.secrets.toEnv }}
-          #   - configMapRef:
-          #       name: {{ .Values.configMap.name }}
-          #   {{- end }}
-          #   {{- if and .Values.secrets.enabled .Values.secrets.toEnv }}
-          #   {{- range .Values.secrets.toEnv }}
-          #   - name: {{ .env }}
-          #     valueFrom:
-          #       secretKeyRef:
-          #         name: {{ $fullname }}-secrets
-          #         key: {{ .secret }}
-          #   {{- end }}
-          #   {{- end }}
-          # {{- if and .Values.secrets.enabled .Values.secrets.toEnvironments }}
-          # envFrom:
-          #   - secretRef:
-          #       name: {{ $fullname }}-secrets-env
-          # {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
