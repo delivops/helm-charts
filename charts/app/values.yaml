@@ -126,7 +126,7 @@ autoscaling:
     awsRegion: ""
   http:
     enabled: false
-    host: []
+    hosts: []
   memory:
     enabled: false
     percentage: "80"
