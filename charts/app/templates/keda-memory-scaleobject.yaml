@@ -8,9 +8,9 @@ spec:
     name:  {{ include "app.fullname" . }} 
   triggers:
   - type: memory
-    metricType: Utilization # Allowed types are 'Utilization' or 'AverageValue'
+    metricType: {{ .Values.autoscaling.memory.metricType }}
     metadata:
-      value: "50"
+      value: {{ .Values.autoscaling.memory.percentage }}
 {{- end }}
 
 
