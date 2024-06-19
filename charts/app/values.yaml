@@ -130,7 +130,8 @@ autoscaling:
   memory:
     enabled: false
     percentage: "80"
-    metricType: "Utilization" # Allowed types are 'Utilization' or 'AverageValue'
+    # Allowed types are 'Utilization' or 'AverageValue'
+    metricType: "Utilization"
 
 nodeSelector: {}
 
