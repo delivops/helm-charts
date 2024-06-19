@@ -129,7 +129,7 @@ autoscaling:
     host: []
   memory:
     enabled: false
-    percentage: "80" # "1k"
+    percentage: "80"
 
 nodeSelector: {}
 
