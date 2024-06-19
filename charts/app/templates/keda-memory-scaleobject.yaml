@@ -1,0 +1,17 @@
+{{- if .Values.autoscaling.memory.enabled }}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ include "app.fullname" . }}-scaledobject
+spec:
+  scaleTargetRef:
+    name:  {{ include "app.fullname" . }} 
+  triggers:
+  - type: memory
+    metricType: Utilization # Allowed types are 'Utilization' or 'AverageValue'
+    metadata:
+      value: "50"
+{{- end }}
+
+
+
