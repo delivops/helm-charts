@@ -1,0 +1,17 @@
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "app.fullname" . }} -hpa
+spec:
+  scaleTargetRef:
+    name: {{ include "app.fullname" . }} 
+  minReplicas: {{ .Values.autoscaling.minReplicaCount }}
+  maxReplicas:  {{ .Values.autoscaling.maxReplicaCount }}
+  metrics: 
+  - type: Pods
+    pods:
+      metric:
+        name: mem_usage_percentage
+      target:
+        type: AverageValue
+        averageValue: {{ .Values.autoscaling.memory.percentage }}
