@@ -1,0 +1,21 @@
+{{- if and .Values.autoscaling.enabled .Values.autoscaling.http.enabled }}
+kind: HTTPScaledObject
+apiVersion: http.keda.sh/v1alpha1
+metadata:
+    name: {{ include "app.fullname" . }}-scaledobject
+    namespace: delivops
+    annotations:
+        httpscaledobject.keda.sh/skip-scaledobject-creation: "false"
+spec:
+    hosts:
+    {{- range .Values.autoscaling.http.host }}
+      - {{ . }}
+    {{- end }}  
+    scaleTargetRef:
+        name: {{ include "app.fullname" . }} 
+    replicas:
+        min: {{ .Values.autoscaling.minReplicaCount }}
+        max: {{ .Values.autoscaling.maxReplicaCount }}
+    scaledownPeriod: {{ .Values.autoscaling.pollingInterval }}
+{{- end }}
+

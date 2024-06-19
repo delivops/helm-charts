@@ -125,6 +125,11 @@ autoscaling:
     queueLength: "5"
     # awsRegion is the AWS region of the SQS queue (required)
     awsRegion: ""
+  http:
+    enabled: false
+    host: []
+  memory:
+    enabled: false
 
 nodeSelector: {}
 
