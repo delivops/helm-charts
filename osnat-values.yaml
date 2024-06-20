@@ -1,5 +1,0 @@
-configmaps:
-  enabled: true
-  names:
-    - configmap1
-    - configmap2
