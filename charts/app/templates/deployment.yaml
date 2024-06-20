@@ -18,22 +18,7 @@ spec:
   {{- end }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
-  affinity:
-    {{- if .Values.affinity.enabled }}
-    nodeAffinity:
-      requiredDuringSchedulingRequiredDuringExecution:
-        nodeSelectorTerms:
-        {{- range $labelName, $values := .Values.affinity.labels }}
-        - matchExpressions:
-          - key: {{ $labelName }}
-            operator: In
-            values:
-            {{- range $values }}
-            - {{ . }}
-            {{- end }}
-        {{- end }}
-    {{- end }}       
+  {{- end }}     
   selector:
     matchLabels:
       {{- include "app.selectorLabels" . | nindent 6 }}
