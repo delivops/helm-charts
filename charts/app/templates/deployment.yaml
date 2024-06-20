@@ -19,8 +19,8 @@ spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
-  {{- if .Values.affinity.enabled }}
   affinity:
+    {{- if .Values.affinity.enabled }}
     nodeAffinity:
       requiredDuringSchedulingRequiredDuringExecution:
         nodeSelectorTerms:
@@ -33,7 +33,7 @@ spec:
             - {{ . }}
             {{- end }}
         {{- end }}
-  {{- end }}       
+    {{- end }}       
   selector:
     matchLabels:
       {{- include "app.selectorLabels" . | nindent 6 }}
