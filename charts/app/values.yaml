@@ -142,15 +142,13 @@ affinity: {}
 env: {}
 
 serviceMonitor:
-  enabled: true
+  enabled: false
   interval: 30s
   metricsPort: 9111
-
 
 configmaps:
   enabled: false
   names: []
-
 initContainer: 
   enabled: false        
   image:
@@ -160,7 +158,7 @@ initContainer:
     args: []
     # Overrides the image tag whose default is the chart appVersion.
     tag: "stable"
-
+    
   healthCheck:
     enabled: true
     healthCheckPath: /
@@ -184,7 +182,6 @@ initContainer:
     # - name: secret-name
     toEnvironments: []
     # - name: secret-name
-
 
   imagePullSecrets: []
   nameOverride: ""
