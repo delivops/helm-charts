@@ -149,16 +149,16 @@ serviceMonitor:
 configmaps:
   enabled: false
   names: []
-  
-initContainer: 
-  enabled: false        
+
+initContainer:
+  enabled: false
   image:
     repository: nginx
     pullPolicy: IfNotPresent
     containerPort: 80
     args: []
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "stable" 
+    tag: "stable"
   healthCheck:
     enabled: true
     healthCheckPath: /
