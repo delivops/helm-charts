@@ -21,8 +21,7 @@ healthCheck:
   healthCheckCommand: ["cat", "/tmp/health"]
   initialDelaySeconds: 0
 
-concurrencyPolicy:
-  value: "Allow"
+concurrencyPolicy: "Forbid"
 successfulJobsHistoryLimit: 3
 failedJobsHistoryLimit: 1
 
