@@ -5,7 +5,7 @@ metadata:
   name: {{ include "cronjob.fullname" . }}
   labels: {{- include "cronjob.labels" . | nindent 4 }}
 spec:
-  concurrencyPolicy: {{ .Values.concurrencyPolicy.value }}
+  concurrencyPolicy: {{ .Values.concurrencyPolicy }}
   successfulJobsHistoryLimit: {{ .Values.successfulJobsHistoryLimit  }}
   failedJobsHistoryLimit: {{ .Values.failedJobsHistoryLimit }}
   schedule: {{ .Values.schedule | quote }}
