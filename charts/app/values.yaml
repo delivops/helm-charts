@@ -132,6 +132,12 @@ autoscaling:
     percentage: "80"
     # Allowed types are 'Utilization' or 'AverageValue'
     metricType: "Utilization"
+  cpu:
+    enabled: false
+    percentage: "80"
+    # Allowed types are 'Utilization' or 'AverageValue'
+    metricType: "Utilization"
+  
 
 nodeSelector: {}
 
