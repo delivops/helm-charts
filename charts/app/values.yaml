@@ -136,7 +136,7 @@ autoscaling:
     enabled: false
     percentage: "80"
     # Allowed types are 'Utilization' or 'AverageValue'
-    metricType: "Utilization"  
+    metricType: "Utilization"
 
 nodeSelector: {}
 
