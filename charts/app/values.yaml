@@ -134,7 +134,7 @@ autoscaling:
     metricType: "Utilization"
   cpu:
     enabled: false
-    percentage: "80"
+    percentage: "50"
     # Allowed types are 'Utilization' or 'AverageValue'
     metricType: "Utilization"
 
