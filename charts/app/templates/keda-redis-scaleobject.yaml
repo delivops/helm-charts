@@ -13,10 +13,9 @@ spec:
   triggers:
   - type: redis
     metadata:
-      address: {{ .Values.autoscaling.redis.address  }}
+      address: {{ .Values.autoscaling.redis.address }}
       listName: {{ .Values.autoscaling.redis.listName  }}
       listLength: {{ .Values.autoscaling.redis.listLength | quote }}
-      password: {{ .Values.autoscaling.redis.password  }}
       databaseIndex: {{ .Values.autoscaling.redis.databaseIndex | quote }}
 {{- end }}
 

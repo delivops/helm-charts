@@ -140,10 +140,9 @@ autoscaling:
   redis:
     enabled: false
     address: "" # Required host:port format #redis-service.redis-namespace:6379
-    password: "" #optional
     listName: "" # Required
     listLength: "1" # Required
-    databaseIndex: "0" # optional  
+    databaseIndex: "0" # optional 
 
 nodeSelector: {}
 
