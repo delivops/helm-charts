@@ -15,15 +15,15 @@ image:
 healthCheck:
   enabled: true
   # Can be any of: https, file, custom -we chose https
-  healthCheckType: https 
+  healthCheckType: https
   healthCheckPath: /
-  healthCheckFileArgs:  
+  healthCheckFileArgs:
     - /bin/sh
     - -c
-    - "touch /tmp/ready; sleep 30; rm -rf /tmp/ready; sleep 600;"  
+    - "touch /tmp/ready; sleep 30; rm -rf /tmp/ready; sleep 600;"
   healthCheckFileLiveness:
     - cat
-    - /tmp/ready 
+    - /tmp/ready
   healthCheckFileReadiness:
     - cat
     - /tmp/ready
