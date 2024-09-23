@@ -117,10 +117,17 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          {{- if .Values.image.args }}
+          {{- if or .Values.image.args (eq .Values.healthCheck.healthCheckType "file") }}
           args:
-            {{- range .Values.image.args }}
-            - {{ . | quote }}
+            {{- if .Values.image.args }}
+              {{- range .Values.image.args }}
+              - {{ . | quote }}
+              {{- end }}
+            {{- end }}  
+            {{- if eq .Values.healthCheck.healthCheckType "file" }}
+              {{- range .Values.healthCheck.healthCheckFileArgs }}
+              - {{ . | quote }}
+              {{- end }}
             {{- end }}
           {{- end }}
           env:
@@ -164,20 +171,37 @@ spec:
               containerPort: {{ .Values.serviceMonitor.metricsPort }}
               protocol: TCP
             {{- end}}
+
           {{- if .Values.healthCheck.enabled }}
           livenessProbe:
+            {{- if eq .Values.healthCheck.healthCheckType "https" }}
             httpGet:
               path: {{ .Values.healthCheck.healthCheckPath | quote }}
               port: http
+            {{- else if eq .Values.healthCheck.healthCheckType "file" }}
+            exec:
+              command:
+                {{- range .Values.healthCheck.healthCheckFileLiveness }}
+                - {{ . | quote }}
+                {{- end }}   
+            {{- end }}
             initialDelaySeconds: {{ .Values.healthCheck.initialDelaySeconds }}
             timeoutSeconds: {{ .Values.healthCheck.timeoutSeconds }}
             periodSeconds: {{ .Values.healthCheck.periodSeconds }}
             successThreshold: {{ .Values.healthCheck.successThreshold }}
             failureThreshold: {{ .Values.healthCheck.failureThreshold }}
           readinessProbe:
+            {{- if eq .Values.healthCheck.healthCheckType "https" }}
             httpGet:
               path: {{ .Values.healthCheck.healthCheckPath | quote }}
               port: http
+            {{- else if eq .Values.healthCheck.healthCheckType "file" }}
+            exec:
+              command:
+                {{- range .Values.healthCheck.healthCheckFileReadiness }}
+                - {{ . | quote }}
+                {{- end }}   
+            {{- end }}
             initialDelaySeconds: {{ .Values.healthCheck.initialDelaySeconds }}
             timeoutSeconds: {{ .Values.healthCheck.timeoutSeconds }}
             periodSeconds: {{ .Values.healthCheck.periodSeconds }}
