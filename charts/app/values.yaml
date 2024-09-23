@@ -27,7 +27,7 @@ healthCheck:
   healthCheckFileReadiness:
     - cat
     - /tmp/ready
-  # if type is file: recommended delay=5, period=5  
+  # if type is file: recommended delay=5, period=5
   initialDelaySeconds: 0
   timeoutSeconds: 1
   periodSeconds: 10
