@@ -14,20 +14,10 @@ image:
 
 healthCheck:
   enabled: true
-  # Can be any of: https, file, custom -we chose https
-  healthCheckType: https
+  # Can be any of: https, file
+  healthCheckType: https 
   healthCheckPath: /
-  healthCheckFileArgs:
-    - /bin/sh
-    - -c
-    - "touch /tmp/ready; sleep 30; rm -rf /tmp/ready; sleep 600;"
-  healthCheckFileLiveness:
-    - cat
-    - /tmp/ready
-  healthCheckFileReadiness:
-    - cat
-    - /tmp/ready
-  # if type is file: recommended delay=5, period=5
+  # if healthCheckType is file, then initial and period should be 5
   initialDelaySeconds: 0
   timeoutSeconds: 1
   periodSeconds: 10
