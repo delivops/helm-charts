@@ -117,18 +117,19 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          {{- if or .Values.image.args (eq .Values.healthCheck.healthCheckType "file") }}
+          {{- if .Values.image.args }}
           args:
             {{- if .Values.image.args }}
               {{- range .Values.image.args }}
               - {{ . | quote }}
               {{- end }}
             {{- end }}  
-            {{- if eq .Values.healthCheck.healthCheckType "file" }}
-              {{- range .Values.healthCheck.healthCheckFileArgs }}
-              - {{ . | quote }}
-              {{- end }}
-            {{- end }}
+          {{- end }}
+          {{- if eq .Values.healthCheck.healthCheckType "file" }}
+          args: 
+            - /bin/sh
+            - -c
+            - "touch /tmp/ready; sleep 30; rm -rf /tmp/ready; sleep 600;"  
           {{- end }}
           env:
             - name: APP_NAME
@@ -171,7 +172,6 @@ spec:
               containerPort: {{ .Values.serviceMonitor.metricsPort }}
               protocol: TCP
             {{- end}}
-
           {{- if .Values.healthCheck.enabled }}
           livenessProbe:
             {{- if eq .Values.healthCheck.healthCheckType "https" }}
@@ -181,9 +181,8 @@ spec:
             {{- else if eq .Values.healthCheck.healthCheckType "file" }}
             exec:
               command:
-                {{- range .Values.healthCheck.healthCheckFileLiveness }}
-                - {{ . | quote }}
-                {{- end }}   
+                - cat
+                - /tmp/ready 
             {{- end }}
             initialDelaySeconds: {{ .Values.healthCheck.initialDelaySeconds }}
             timeoutSeconds: {{ .Values.healthCheck.timeoutSeconds }}
@@ -198,9 +197,8 @@ spec:
             {{- else if eq .Values.healthCheck.healthCheckType "file" }}
             exec:
               command:
-                {{- range .Values.healthCheck.healthCheckFileReadiness }}
-                - {{ . | quote }}
-                {{- end }}   
+                - cat
+                - /tmp/ready 
             {{- end }}
             initialDelaySeconds: {{ .Values.healthCheck.initialDelaySeconds }}
             timeoutSeconds: {{ .Values.healthCheck.timeoutSeconds }}
