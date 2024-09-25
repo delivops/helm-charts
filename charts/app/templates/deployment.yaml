@@ -44,12 +44,12 @@ spec:
           securityContext:
             {{- toYaml .Values.initContainer.securityContext | nindent 12 }}
           image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag | default .Chart.AppVersion }}"
-            {{- if .Values.image.args }}
-            args:
-              {{- range .Values.initContainer.image.args }}
-              - {{ . | quote }}
-              {{- end }}
+          {{- if .Values.image.args }}
+          args:
+            {{- range .Values.initContainer.image.args }}
+            - {{ . | quote }}
             {{- end }}
+          {{- end }}
           env:
             - name: APP_NAME
               value: {{ $fullname }}
@@ -117,18 +117,12 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-            {{- if .Values.image.args }}
-            args:
-              {{- range .Values.image.args }}
-              - {{ . | quote }}
-              {{- end }}
+          {{- if .Values.image.args }}
+          args:
+            {{- range .Values.image.args }}
+            - {{ . | quote }}
             {{- end }}
-          {{- if eq .Values.healthCheck.healthCheckType "file" }}
-          args: 
-            - /bin/sh
-            - -c
-            - "touch {{.Values.healthCheck.healthCheckPath }};"  
-          {{- end }}            
+          {{- end }}          
           env:
             - name: APP_NAME
               value: {{ $fullname }}
