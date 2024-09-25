@@ -44,12 +44,12 @@ spec:
           securityContext:
             {{- toYaml .Values.initContainer.securityContext | nindent 12 }}
           image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag | default .Chart.AppVersion }}"
-          {{- if .Values.image.args }}
-          args:
-            {{- range .Values.initContainer.image.args }}
-            - {{ . | quote }}
+            {{- if .Values.image.args }}
+            args:
+              {{- range .Values.initContainer.image.args }}
+              - {{ . | quote }}
+              {{- end }}
             {{- end }}
-          {{- end }}
           env:
             - name: APP_NAME
               value: {{ $fullname }}
@@ -117,20 +117,18 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          {{- if .Values.image.args }}
-          args:
             {{- if .Values.image.args }}
+            args:
               {{- range .Values.image.args }}
               - {{ . | quote }}
               {{- end }}
-            {{- end }}  
-          {{- end }}
+            {{- end }}
           {{- if eq .Values.healthCheck.healthCheckType "file" }}
           args: 
             - /bin/sh
             - -c
-            - "touch /tmp/ready; sleep 30; rm -rf /tmp/ready; sleep 600;"  
-          {{- end }}
+            - "touch {{.Values.healthCheck.healthCheckPath }};"  
+          {{- end }}            
           env:
             - name: APP_NAME
               value: {{ $fullname }}
@@ -181,25 +179,21 @@ spec:
             {{- else if eq .Values.healthCheck.healthCheckType "file" }}
             exec:
               command:
-                - cat
-                - /tmp/ready 
+                - /bin/sh
+                - -c
+                - "if [ -f {{.Values.healthCheck.healthCheckPath }} ]; then rm -rf {{.Values.healthCheck.healthCheckPath }}; else exit 1; fi"
             {{- end }}
             initialDelaySeconds: {{ .Values.healthCheck.initialDelaySeconds }}
             timeoutSeconds: {{ .Values.healthCheck.timeoutSeconds }}
             periodSeconds: {{ .Values.healthCheck.periodSeconds }}
             successThreshold: {{ .Values.healthCheck.successThreshold }}
             failureThreshold: {{ .Values.healthCheck.failureThreshold }}
+          {{- end }} 
+          {{- if eq .Values.healthCheck.healthCheckType "https" }}  
           readinessProbe:
-            {{- if eq .Values.healthCheck.healthCheckType "https" }}
             httpGet:
               path: {{ .Values.healthCheck.healthCheckPath | quote }}
               port: http
-            {{- else if eq .Values.healthCheck.healthCheckType "file" }}
-            exec:
-              command:
-                - cat
-                - /tmp/ready 
-            {{- end }}
             initialDelaySeconds: {{ .Values.healthCheck.initialDelaySeconds }}
             timeoutSeconds: {{ .Values.healthCheck.timeoutSeconds }}
             periodSeconds: {{ .Values.healthCheck.periodSeconds }}
