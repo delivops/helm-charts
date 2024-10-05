@@ -15,19 +15,19 @@ spec:
   {{- if ne (default true .enabled) false }}
   {{- if eq .type "cpu" }}
   - type: cpu
-    metricType: {{ .metricType }}
+    metricType: {{ .metricType | default "Utilization" }}
     metadata:
-      value: {{ .percentage | quote }}
+      value: {{ .percentage | default "50" | quote }}
   {{- else if eq .type "memory" }}
   - type: memory
-    metricType: {{ .metricType }}
+    metricType: {{ .metricType | default "Utilization" }}
     metadata:
-      value: {{ .percentage | quote }}
+      value: {{ .percentage | default "80" | quote }}
   {{- else if eq .type "sqs" }}
   - type: aws-sqs-queue
     metadata:
       queueURL: {{ .queueURL }}
-      queueLength: {{ .queueLength | quote }}
+      queueLength: {{ .queueLength | default "5" | quote }}
       awsRegion: {{ .awsRegion }}
       identityOwner: operator
   {{- else if eq .type "redis" }}
@@ -35,15 +35,15 @@ spec:
     metadata:
       address: {{ .address }}
       listName: {{ .listName }}
-      listLength: {{ .listLength | quote }}
-      databaseIndex: {{ .databaseIndex | quote }}
+      listLength: {{ .listLength | default "1" | quote }}
+      databaseIndex: {{ .databaseIndex | default "0" | quote }}
   {{- else if eq .type "cron" }}
   - type: cron
     metadata:
-      timezone: {{ .timezone }}
-      start: {{ .start }}
-      end: {{ .end }}
-      desiredReplicas: {{ .desiredReplicas | quote }}
+      timezone: {{ .timezone | default "UTC" }}
+      start: {{ .start | default "0 8 * * *" }}
+      end: {{ .end | default "0 20 * * *" }}
+      desiredReplicas: {{ .desiredReplicas | default "10" | quote }}
   {{- end }}
   {{- end }}
   {{- end }}
