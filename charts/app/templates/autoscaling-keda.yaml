@@ -1,0 +1,50 @@
+{{- if .Values.autoscalingKeda.enabled }}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ include "app.fullname" . }}-scaledobject
+spec:
+  scaleTargetRef:
+    name: {{ include "app.fullname" . }}
+  pollingInterval: {{ .Values.autoscalingKeda.pollingInterval }}
+  cooldownPeriod: {{ .Values.autoscalingKeda.cooldownPeriod }}
+  minReplicaCount: {{ .Values.autoscalingKeda.minReplicaCount }}
+  maxReplicaCount: {{ .Values.autoscalingKeda.maxReplicaCount }}
+  triggers:
+  {{- range .Values.autoscalingKeda.triggers }}
+  {{- if ne (default true .enabled) false }}
+  {{- if eq .type "cpu" }}
+  - type: cpu
+    metricType: {{ .metricType }}
+    metadata:
+      value: {{ .percentage | quote }}
+  {{- else if eq .type "memory" }}
+  - type: memory
+    metricType: {{ .metricType }}
+    metadata:
+      value: {{ .percentage | quote }}
+  {{- else if eq .type "sqs" }}
+  - type: aws-sqs-queue
+    metadata:
+      queueURL: {{ .queueURL }}
+      queueLength: {{ .queueLength | quote }}
+      awsRegion: {{ .awsRegion }}
+      identityOwner: operator
+  {{- else if eq .type "redis" }}
+  - type: redis
+    metadata:
+      address: {{ .address }}
+      listName: {{ .listName }}
+      listLength: {{ .listLength | quote }}
+      databaseIndex: {{ .databaseIndex | quote }}
+  {{- else if eq .type "cron" }}
+  - type: cron
+    metadata:
+      timezone: {{ .timezone }}
+      start: {{ .start }}
+      end: {{ .end }}
+      desiredReplicas: {{ .desiredReplicas | quote }}
+  {{- end }}
+  {{- end }}
+  {{- end }}
+{{- end }}

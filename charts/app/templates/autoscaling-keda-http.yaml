@@ -1,0 +1,30 @@
+{{- if .Values.autoscalingKeda.enabled }}
+{{- $root := . }}
+{{- range .Values.autoscalingKeda.triggers }}
+{{- if and (eq .type "http") (ne (default true .enabled) false) }}
+apiVersion: http.keda.sh/v1alpha1
+kind: HTTPScaledObject
+metadata:
+  name: {{ include "app.fullname" $root }}-http-scaledobject
+  annotations:
+    httpscaledobject.keda.sh/skip-scaledobject-creation: "false"
+spec:
+  hosts:
+    - {{ include "app.fullname" $root }}.{{ $root.Release.Namespace }}
+    - {{ include "app.fullname" $root }}.{{ $root.Release.Namespace }}.svc.cluster.local
+  {{- range .hosts }}
+    - {{ . }}
+  {{- end }}
+  scaleTargetRef:
+    name: {{ include "app.fullname" $root }}
+    kind: Deployment
+    apiVersion: apps/v1
+    service: {{ include "app.fullname" $root }}
+    port: 80
+  replicas:
+    min: {{ $root.Values.autoscalingKeda.minReplicaCount }}
+    max: {{ $root.Values.autoscalingKeda.maxReplicaCount }}
+  scaledownPeriod: {{ $root.Values.autoscalingKeda.cooldownPeriod }}
+{{- end }}
+{{- end }}
+{{- end }}
