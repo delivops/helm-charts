@@ -16,7 +16,7 @@ spec:
       maxUnavailable: {{ .Values.maxUnavailable }}
       maxSurge: {{ .Values.maxSurge }}
   {{- end }}
-  {{- if not .Values.autoscaling.enabled }}
+  {{- if and (not .Values.autoscaling.enabled) (not .Values.autoscalingKeda.enabled) }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
