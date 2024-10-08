@@ -166,7 +166,7 @@ spec:
             {{- end}}
           {{- if .Values.healthCheck.enabled }}
           livenessProbe:
-            {{- if eq .Values.healthCheck.healthCheckType "https" }}
+            {{- if eq .Values.healthCheck.healthCheckType "http" }}
             httpGet:
               path: {{ .Values.healthCheck.healthCheckPath | quote }}
               port: http
@@ -182,7 +182,7 @@ spec:
             periodSeconds: {{ .Values.healthCheck.periodSeconds }}
             successThreshold: {{ .Values.healthCheck.successThreshold }}
             failureThreshold: {{ .Values.healthCheck.failureThreshold }}
-          {{- if eq .Values.healthCheck.healthCheckType "https" }}  
+          {{- if eq .Values.healthCheck.healthCheckType "http" }}  
           readinessProbe:
             httpGet:
               path: {{ .Values.healthCheck.healthCheckPath | quote }}
