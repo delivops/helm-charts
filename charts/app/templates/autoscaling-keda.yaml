@@ -47,4 +47,9 @@ spec:
   {{- end }}
   {{- end }}
   {{- end }}
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: {{ .Values.autoscalingKeda.stabilizationWindowSeconds }}
 {{- end }}

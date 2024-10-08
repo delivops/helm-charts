@@ -158,8 +158,10 @@ autoscalingKeda:
   enabled: false
   # interval in seconds to poll for metrics
   pollingInterval: 30
-  # cooldown period in seconds
+  # cooldown period in number of seconds to wait before scaling down to zero after the last trigger event
   cooldownPeriod: 300
+  # stabilizationWindowSeconds is the number of seconds to stabilize the metric before scaling to the desired number of replicas (other than zero)
+  stabilizationWindowSeconds: 300
   # minReplicaCount is the lower limit for the number of replicas that can be set by the autoscaler
   minReplicaCount: 1
   # maxReplicaCount is the upper limit for the number of replicas that can be set by the autoscaler
