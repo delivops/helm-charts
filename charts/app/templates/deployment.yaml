@@ -136,23 +136,23 @@ spec:
             {{- end }}
           {{- if or .Values.configmaps.enabled .Values.secrets.enabled }}
           envFrom:
-            {{- range .Values.configmaps.names }}
+          {{- range .Values.configmaps.names }}
             - configMapRef:
                 name: {{ . }}
-            {{- end }}
-            {{- if and .Values.secrets.enabled .Values.secrets.toEnv }}
-            {{- range .Values.secrets.toEnv }}
+          {{- end }}
+          {{- if and .Values.secrets.enabled .Values.secrets.toEnv }}
+          {{- range .Values.secrets.toEnv }}
             - name: {{ .env }}
               valueFrom:
                 secretKeyRef:
                   name: {{ $fullname }}-secrets
                   key: {{ .secret }}
-            {{- end }}
-            {{- end }}
-            {{- if and .Values.secrets.enabled .Values.secrets.toEnvironments }}
+          {{- end }}
+          {{- end }}
+          {{- if and .Values.secrets.enabled .Values.secrets.toEnvironments }}
             - secretRef:
                 name: {{ $fullname }}-secrets-env
-            {{- end }}
+          {{- end }}
           {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -163,7 +163,7 @@ spec:
             - name: metrics
               containerPort: {{ .Values.serviceMonitor.metricsPort }}
               protocol: TCP
-            {{- end }}
+            {{- end}}
           {{- if .Values.healthCheck.enabled }}
           livenessProbe:
             {{- if eq .Values.healthCheck.healthCheckType "http" }}
@@ -175,13 +175,9 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - "if [ -f {{ eq .Values.healthCheck.healthCheckPath "/" | ternary "/tmp/ready" .Values.healthCheck.healthCheckPath }} ]; then rm -rf {{ eq .Values.healthCheck.healthCheckPath "/" | ternary "/tmp/ready" .Values.healthCheck.healthCheckPath }}; else exit 1; fi"
+                - "if [ -f {{.Values.healthCheck.healthCheckPath }} ]; then rm -f {{.Values.healthCheck.healthCheckPath }}; else exit 1; fi"
             {{- end }}
-            {{- if eq .Values.healthCheck.healthCheckType "http" }}
             initialDelaySeconds: {{ .Values.healthCheck.initialDelaySeconds }}
-            {{- else if eq .Values.healthCheck.healthCheckType "file" }}
-            initialDelaySeconds: {{ eq (toString .Values.healthCheck.initialDelaySeconds) "0" | ternary 5 .Values.healthCheck.initialDelaySeconds }}
-            {{- end }}
             timeoutSeconds: {{ .Values.healthCheck.timeoutSeconds }}
             periodSeconds: {{ .Values.healthCheck.periodSeconds }}
             successThreshold: {{ .Values.healthCheck.successThreshold }}
@@ -201,7 +197,7 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- if .Values.secrets.enabled }}
-          {{- if .Values.secrets.toFiles }}
+          {{- if .Values.secrets.toFiles}}
           volumeMounts:
           - name: secrets-volume
             mountPath: {{ .Values.secrets.secretsDir }}
@@ -226,9 +222,9 @@ spec:
         secret:
           secretName: {{ $fullname }}-secrets
           items:
-            {{- range .Values.secrets.toFiles }}
-            - key: {{ .name }}
-              path: {{ .name }}
-            {{- end }}
+          {{- range .Values.secrets.toFiles }}
+          - key: {{ .name }}
+            path: {{ .name }}
+          {{- end }}
       {{- end }}
       {{- end }}
