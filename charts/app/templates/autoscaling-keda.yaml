@@ -10,9 +10,16 @@ spec:
   cooldownPeriod: {{ .Values.autoscalingKeda.cooldownPeriod }}
   minReplicaCount: {{ .Values.autoscalingKeda.minReplicaCount }}
   maxReplicaCount: {{ .Values.autoscalingKeda.maxReplicaCount }}
+  {{- $enabledTriggers := false }}
+  {{- range .Values.autoscalingKeda.triggers }}
+    {{- if ne .enabled false }}
+      {{- $enabledTriggers = true }}
+    {{- end }}
+  {{- end }}
+  {{- if $enabledTriggers }}
   triggers:
   {{- range .Values.autoscalingKeda.triggers }}
-  {{- if ne .enabled false }} # boolean false is considered "empty", so we need to check for not equal to false
+  {{- if ne .enabled false }}
   {{- if eq .type "cpu" }}
   - type: cpu
     metricType: {{ .metricType | default "Utilization" }}
@@ -46,6 +53,9 @@ spec:
       desiredReplicas: {{ .desiredReplicas | default "10" | quote }}
   {{- end }}
   {{- end }}
+  {{- end }}
+  {{- else }}
+  triggers: []
   {{- end }}
   advanced:
     horizontalPodAutoscalerConfig:
