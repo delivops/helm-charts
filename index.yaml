@@ -2,6 +2,19 @@ apiVersion: v1
 entries:
   app:
   - apiVersion: v2
+    created: "2024-12-31T21:28:27.508901753Z"
+    description: A Helm chart for Kubernetes
+    digest: 4a7a2c3a8c29fd34e1421f5951b15853d382a0b6e74346ac4064a28b67315ad8
+    maintainers:
+    - email: hello@delivops.io
+      name: Delivops
+      url: https://delivops.io
+    name: app
+    type: application
+    urls:
+    - https://github.com/delivops/helm-charts/releases/download/app-0.18.0/app-0.18.0.tgz
+    version: 0.18.0
+  - apiVersion: v2
     created: "2024-12-30T22:46:36.773064552Z"
     description: A Helm chart for Kubernetes
     digest: 270b26f22f76931e959a6845634b6e8af2deff4ac9ba346d008dd59cd2bba9ed
@@ -719,4 +732,4 @@ entries:
     urls:
     - https://github.com/delivops/helm-charts/releases/download/job-0.1.0/job-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-30T22:46:36.773507747Z"
+generated: "2024-12-31T21:28:27.509205319Z"
